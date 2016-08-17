@@ -8,7 +8,8 @@
 	<properties>
 		<java.target.version>1.7</java.target.version>
 		<maven.plugin.version>2.4</maven.plugin.version>
-		<spring.boot.version>1.2.5.RELEASE</spring.boot.version>
+		<scala.binary.version>2.11</scala.binary.version>
+		<spring.boot.version>1.3.3.RELEASE</spring.boot.version>
 		<mojo.maven.plugin.version>1.3</mojo.maven.plugin.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -25,8 +26,23 @@
 	</dependencyManagement>
 	<dependencies>
 		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>jackson-databind</artifactId>
+					<groupId>com.fasterxml.jackson.core</groupId>
+				</exclusion>
+				<!-- <exclusion>
+					<artifactId>hibernate-validator</artifactId>
+					<groupId>org.hibernate</groupId>
+				</exclusion> -->
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -44,58 +60,19 @@
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-hadoop-boot</artifactId>
-			<version>2.4.0.RELEASE</version>
-			<exclusions>
-				<exclusion>
-					<groupId>jdk.tools</groupId>
-					<artifactId>jdk.tools</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-hadoop-batch</artifactId>
-			<version>2.4.0.RELEASE</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework.boot</groupId>
-					<artifactId>spring-boot-starter-logging</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-hadoop-spark</artifactId>
-			<version>2.4.0.RELEASE</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-yarn_2.11</artifactId>
-			<version>2.0.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.spark</groupId>
 			<artifactId>spark-streaming_2.11</artifactId>
 			<version>2.0.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.spark</groupId>
-			<artifactId>spark-streaming-kafka_2.11</artifactId>
-			<version>1.6.2</version>
+			<artifactId>spark-sql_2.11</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-hive_2.11</artifactId>
+			<version>2.0.0</version>
 		</dependency>
 	</dependencies>
 	<build>

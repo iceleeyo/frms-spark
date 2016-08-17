@@ -4,17 +4,3 @@ server:
   port: 10020
   context-path: /frms-spark
   session-timeout: 3600
-  
-spring:
-  batch:
-    job:
-      enabled: false
-  hadoop:
-    fsUri: hdfs://borneo:8020
-    resourceManagerHost: borneo
-example:
-  inputLocalDir: data
-  inputFileName: tweets.dat
-  inputDir: /tmp/hashtags/input
-  outputDir: /tmp/hashtags/output
-  sparkAssembly: hdfs:///app/spark/spark-assembly-1.5.0-hadoop2.6.0.jar
