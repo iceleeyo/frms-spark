@@ -5,7 +5,9 @@ import static org.apache.spark.sql.functions.col;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.Function;
@@ -23,13 +25,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cn.com.bsfit.frms.spark.pojo.Person;
+import cn.com.bsfit.frms.spark.utils.Constants;
 
 @Component
 public class SparkSQL {
 
 	@Autowired
 	private transient SparkSession sparkSession;
-
+	
 	public void executeSparkSQL() {
 		runBasicDataFrameExample(sparkSession);
 		runDatasetCreationExample(sparkSession);
@@ -38,6 +41,33 @@ public class SparkSQL {
 	}
 
 	private static void runBasicDataFrameExample(final SparkSession spark) {
+//		Properties properties = new Properties();
+//		properties.put("user", "lkl_ds_test");
+//		properties.put("password", "bangsun");
+//		properties.put("driver", Constants.ORACLE_DRIVER_CLASS);
+//		
+//		
+//		final Dataset<Row> sqlDf = spark.read().jdbc("jdbc:oracle:thin:@10.100.1.20:1521:db3", "OFFLINE_PAY_ORDER", properties);
+//		long count = sqlDf.count();
+				
+		
+		Map<String, String> options = new HashMap<>();
+		options.put("url", Constants.JDBC_URL);
+		options.put("dbtable", "LKL_DS_TEST.OFFLINE_PAY_ORDER");
+		options.put("user", "lkl_ds_test");
+		options.put("password", "bangsun");
+		options.put("driver", Constants.ORACLE_DRIVER_CLASS);
+
+		
+		
+		Dataset<Row> jdbcDF = spark.read().format("jdbc").options(options).load();
+		
+		Dataset<Row> aaa = jdbcDF.groupBy("TRANS_PRC_CODE").count();
+		aaa.show();
+		
+		spark.sql("");
+		
+		
 		final Dataset<Row> df = spark.read().json("src/main/resources/people.json");
 
 		df.show();
